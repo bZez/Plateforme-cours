@@ -1,2 +1,2 @@
 # Plateforme-cours
-Plateforme de cours propulsé par Symfony
+Plateforme de cours propulsée par Symfony
