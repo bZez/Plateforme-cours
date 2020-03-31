@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+   <div class="container" style="height: 100vh">
+      <div class="row h-100 align-items-center">
+         <div class="col-12 col-md-4 m-auto rounded shadow p-5 bg-white text-center border">
+            <img src="https://cdn.bzez.dev/img/logo-blanc.png" alt="Logo graphicNAIVETY" width="100px" class="mb-3">
+            <form method="post">
+               {% if error %}
+                  <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+               {% endif %}
+
+               {% if app.user %}
+                  <div class="mb-3">
+                     You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                  </div>
+               {% endif %}
+               <input type="email" value="{{ last_username }}" placeholder="Adresse email..." name="email" id="inputEmail" class="form-control" required
+                      autofocus>
+               <input type="password" name="password" id="inputPassword" class="form-control mt-3" required placeholder="Mot de passe...">
+
+               <input type="hidden" name="_csrf_token"
+                      value="{{ csrf_token('authenticate') }}">
+               <div class="checkbox mb-3 mt-3 text-left">
+                  <label>
+                     <input type="checkbox" name="_remember_me"> Se souvenir de moi ?
+                  </label>
+               </div>
+
+               <button class="btn btn-sm btn-warning font-weight-bold" type="submit">
+                 <i class="fas fa-user-lock"></i> Connexion
+               </button>
+            </form>
+         </div>
+      </div>
+   </div>
+{% endblock %}

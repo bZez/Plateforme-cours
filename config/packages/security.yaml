@@ -1,23 +1,51 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\Admin:
+            algorithm: auto
+        App\Entity\Student:
+            algorithm: auto
+
     providers:
-        users_in_memory: { memory: null }
+        app_admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: email
+        app_user_provider:
+            entity:
+                class: App\Entity\Student
+                property: email
+        all_users:
+            chain:
+                providers: ['app_admin_provider', 'app_user_provider']
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            anonymous: lazy
-            provider: users_in_memory
+        admin:
+            provider: app_admin_provider
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\PlatformAuthenticator
+            logout:
+                path:   app_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+        students:
+            provider: app_user_provider
+            anonymous: true
+            guard:
+                authenticators:
+                    - App\Security\PlatformAuthenticator
+            logout:
+                path:   app_logout
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 6048000 # 10 week in seconds
+                path:     /
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: ^/a, roles: ROLE_ADMIN }
+         - { path: ^/s, roles: ROLE_STUDENT }
