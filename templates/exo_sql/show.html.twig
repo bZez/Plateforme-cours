@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExoSQL{% endblock %}
+
+{% block body %}
+    <h1>ExoSQL</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ exo_s_q_l.id }}</td>
+            </tr>
+            <tr>
+                <th>Objectif</th>
+                <td>{{ exo_s_q_l.objectif }}</td>
+            </tr>
+            <tr>
+                <th>Rappel</th>
+                <td>{{ exo_s_q_l.rappel }}</td>
+            </tr>
+            <tr>
+                <th>Resultat</th>
+                <td>{{ exo_s_q_l.resultat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('exo_s_q_l_index') }}">back to list</a>
+
+    <a href="{{ path('exo_s_q_l_edit', {'id': exo_s_q_l.id}) }}">edit</a>
+
+    {{ include('exo_s_q_l/_delete_form.html.twig') }}
+{% endblock %}

@@ -3,15 +3,62 @@
     <head>
         <meta charset="UTF-8">
         <title>graphicNAIVETY School - {% block title %}Welcome !{% endblock %}</title>
-        <link rel="stylesheet" href="https://cdn.bzez.dev/css/bootstrap.dark.min.css" type="text/css">
+        <link rel="stylesheet" href="{{ asset('bootstrap.dark.min.css') }}" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" type="text/css">
+        <link rel="stylesheet" href="{{ asset('dist/prism.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('dist/prism-live.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('dist/success.css') }}" type="text/css">
         {% block stylesheets %}{% endblock %}
     </head>
     <body style="background-image: url({{ asset('img/bg.svg') }});background-repeat:no-repeat;background-size: cover">
-        {% block body %}{% endblock %}
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <div class="container-fluid">
+        <div class="row align-items-center h-100 bg-light" id="overlay-load">
+            <div class="col-12">
+                <div class="success-checkmark m-auto" style="z-index: 1">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center h-100 bg-light d-none" id="overlay-win">
+            <div class="col-12">
+                <div class="success-checkmark m-auto" style="z-index: 1">
+                    <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        {% include 'nav/navbar.html.twig' %}
+        <div class="container-fluid" style="height: calc(100vh - 78px)">
+            {% block body %}{% endblock %}
+        </div>
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.min.js"
+                integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+                crossorigin="anonymous"></script>
+        <script>
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip({
+                    html:true
+                });
+                setTimeout(function () {
+                    $('#overlay-load').fadeOut();
+                },750);
+            });
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="{{ asset('dist/prism.js') }}"></script>
+        <script src="{{ asset('dist/prism-live.js?load=sql') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExoSQL index{% endblock %}
+
+{% block body %}
+    <h1>ExoSQL index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Objectif</th>
+                <th>Rappel</th>
+                <th>Resultat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for exo_s_q_l in exo_s_q_ls %}
+            <tr>
+                <td>{{ exo_s_q_l.id }}</td>
+                <td>{{ exo_s_q_l.objectif }}</td>
+                <td>{{ exo_s_q_l.rappel }}</td>
+                <td>{{ exo_s_q_l.resultat }}</td>
+                <td>
+                    <a href="{{ path('exo_s_q_l_show', {'id': exo_s_q_l.id}) }}">show</a>
+                    <a href="{{ path('exo_s_q_l_edit', {'id': exo_s_q_l.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('exo_s_q_l_new') }}">Create new</a>
+{% endblock %}
