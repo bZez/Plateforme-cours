@@ -1,5 +1,5 @@
 /**
- Prism Live: Code sql-editor based on Prism.js
+ Prism Live: Code editor based on Prism.js
  Works best in Chrome. Currently only very basic support in other browsers (no snippets, no shortcuts)
  @author Lea Verou
  */
@@ -94,7 +94,7 @@
                 keydown: evt => {
                     if (evt.key == "Tab" && !evt.altKey) {
                         // Default is to move focus off the textarea
-                        // this is never desirable in an sql-editor
+                        // this is never desirable in an editor
                         evt.preventDefault();
                         if (this.tabstops && this.tabstops.length > 0) {
                             // We have tabstops to go

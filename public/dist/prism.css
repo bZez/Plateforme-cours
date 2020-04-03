@@ -16,6 +16,10 @@ body {
 	color: rgba(255, 255, 255, .5);
 
 }
+.nav-link.finished {
+	border-bottom: 2px solid #ffc107;
+	background: #313539;
+}
 .tableFixHead    { overflow-y: auto; height:calc(50vh - 38px); width: calc(100% + 22px)}
 .tableFixHead th { position: sticky; top: 0; }
 .pane {

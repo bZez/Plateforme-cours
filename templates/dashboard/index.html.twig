@@ -3,5 +3,102 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
-{% include 'sql-editor/editor.html.twig' %}
+    <div class="row p-5 h-100 bg-white">
+        <div class="col-2 shadow bg-light p-0">
+            <img src="https://via.placeholder.com/300x400" alt="" width="100%">
+            <div class="col-12 mt-3">
+                <h5>{{ app.user.firstname }}</h5>
+                <p class="text-black-50 small">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi.
+                </p>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <h5>Cours terminé(s)</h5>
+                        <i class="fas fa-trophy text-warning fa-4x">{{ app.user.trophies|length }}</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-10 pl-5">
+            <div class="row">
+                <div class="col-12">
+                    <h1><i class="fas fa-hat-wizard text-warning"></i> Hop ! Au boulot :)</h1>
+                    <hr>
+                </div>
+                {% for theme in themes %}
+                    {% if app.user.hasTrophy(theme.code) is null %}
+                    <div class="col-3 bloc-theme mb-3" data-theme="{{ path('student_exos',{code:theme.code}) }}">
+                        <div class="col-12 rounded shadow p-3 bg-light text-center">
+                            {{ theme.icon|raw}}
+                            <h4>{{ theme.label }}</h4>
+                            <hr>
+                            <span class="text-black-50">Tu n'as <b>pas encore</b> complété ce module </span>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="row mt-5">
+                <div class="col-12">
+                    <h1><i class="fas fa-history text-warning"></i> Historique des cours terminés</h1>
+                    <hr>
+                </div>
+                {% for theme in themes %}
+                    {% if app.user.hasTrophy(theme.code) %}
+                        <div class="col-3 mb-3" data-theme="{{ path('student_exos',{code:theme.code}) }}">
+                            <div class="col-12 rounded shadow p-3 bg-light text-center">
+                                <i class="fas fa-trophy text-warning fa-4x"></i>
+                                <h4>{{ theme.label }}</h4>
+                                <hr>
+                                <span class="text-black-50">Tu as complété ce module le <b>{{ app.user.trophy(theme.code).winAt|date('d/m/Y') }}</b></span>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        class Dashist {
+            constructor() {
+                let bz = this;
+                bz.items = $('.bloc-theme');
+                bz.items.on({
+                    'click': function () {
+                        window.location.href = $(this).attr('data-theme');
+                    }
+                });
+            }
+        }
+        const dash = new Dashist();
+        /*
+    Carousel
+*/
+        $('#carousel-example').on('slide.bs.carousel', function (e) {
+            /*
+                CC 2.0 License Iatek LLC 2018 - Attribution required
+            */
+            var $e = $(e.relatedTarget);
+            var idx = $e.index();
+            var itemsPerSlide = 5;
+            var totalItems = $('.carousel-item').length;
+
+            if (idx >= totalItems-(itemsPerSlide-1)) {
+                var it = itemsPerSlide - (totalItems - idx);
+                for (var i=0; i<it; i++) {
+                    // append slides to end
+                    if (e.direction=="left") {
+                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
+                    }
+                    else {
+                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
+                    }
+                }
+            }
+        });
+    </script>
 {% endblock %}

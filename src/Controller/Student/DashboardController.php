@@ -2,6 +2,7 @@
 
 namespace App\Controller\Student;
 
+use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -10,13 +11,31 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class DashboardController extends AbstractController
 {
+    private $themes;
+    public function __construct(ThemeRepository $repository)
+    {
+        $this->themes = $repository;
+    }
+
+    public function theme($code) {
+            return $this->themes->findOneBy(['code'=>$code]);
+    }
     /**
      * @Route("/dashboard", name="student_dash")
      */
     public function index()
     {
         return $this->render('dashboard/index.html.twig', [
-            'controller_name' => 'DashboardController',
+            'themes' => $this->themes->findAll(),
+        ]);
+    }
+    /**
+     * @Route("/exos/{code}", name="student_exos")
+     */
+    public function editor($code)
+    {
+        return $this->render('editor/editor.html.twig', [
+            'theme' => $this->theme($code),
         ]);
     }
 }

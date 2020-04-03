@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid h-100 p-0">
+        <div class="row h-100 overflow-hidden">
+            <div class="col-1 p-0 bg-light shadow" style="z-index: 1">
+                <div class="nav flex-column nav-pills" id="v-exo-tab" role="tablist" aria-orientation="vertical">
+                    {% for exo in theme.exercices %}
+                        <a class="nav-link {% if loop.first %}active{% else %}disabled{% endif %}{% if app.user.hasTrophy(theme.code) %} finished{% endif %}"
+                           id="exo-sql-{{ loop.index }}-tab" data-toggle="pill"
+                           href="#exo-sql-{{ loop.index }}" role="tab" data-value="{{ exo.id }}"
+                           aria-controls="exo-sql-{{ loop.index }}" aria-selected="true">Exercice
+                            N°{{ loop.index }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-8 p-0 ">
+                {# TODO: DIAGRAM #}
+                <div class="row align-items-center bg-white shadow " style="min-height: 50%!important;">
+                    {% include 'editor/form.html.twig' %}
+                </div>
+                <div class="row h-50 bg-white bg-logo m-0">
+                    {% include 'editor/results.html.twig' %}
+                </div>
+            </div>
+            <div class="col-3 p-0">
+                <div class="container-fluid p-3 bg-light shadow h-100" id="right-pane"
+                     style="max-height:calc(100vh - 78px);overflow-y: auto">
+                    <h4 class="pt-3"><i class="fas fa-history text-warning small"></i> Historique</h4>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('dist/prism-live.js?load='~theme.code|lower) }}"></script>
+    <script src="{{ asset('dist/reqist.js') }}"></script>
+    <script>
+        const storage = window.localStorage;
+        let reqist = new Reqist("{{ path('r_exec') }}","{{ path('r_complete',{code:theme.code}) }}");
+        reqist.init();
+    </script>
+{% endblock %}

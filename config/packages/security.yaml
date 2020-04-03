@@ -1,9 +1,9 @@
 security:
     encoders:
         App\Entity\Admin:
-            algorithm: auto
+            algorithm: bcrypt
         App\Entity\Student:
-            algorithm: auto
+            algorithm: bcrypt
 
     providers:
         app_admin_provider:

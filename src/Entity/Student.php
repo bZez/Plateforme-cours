@@ -2,13 +2,20 @@
 
 namespace App\Entity;
 
+use App\Repository\TrophyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StudentRepository")
  * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ * @ORM\Table(name="Student")
  */
 class Student implements UserInterface
 {
@@ -32,7 +39,9 @@ class Student implements UserInterface
     public function __construct()
     {
         $this->roles[] = 'ROLE_STUDENT';
+        $this->trophies = new ArrayCollection();
     }
+
 
     /**
      * @var string The hashed password
@@ -50,6 +59,12 @@ class Student implements UserInterface
      */
     private $firstname;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Trophy", mappedBy="sutdent", orphanRemoval=true)
+     */
+    private $trophies;
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -66,6 +81,7 @@ class Student implements UserInterface
 
         return $this;
     }
+
 
     /**
      * A visual identifier that represents this user.
@@ -150,5 +166,56 @@ class Student implements UserInterface
         $this->firstname = $firstname;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Trophy[]
+     */
+    public function getTrophies(): Collection
+    {
+        return $this->trophies;
+    }
+
+    public function addTrophy(Trophy $trophy): self
+    {
+        if (!$this->trophies->contains($trophy)) {
+            $this->trophies[] = $trophy;
+            $trophy->setSutdent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTrophy(Trophy $trophy): self
+    {
+        if ($this->trophies->contains($trophy)) {
+            $this->trophies->removeElement($trophy);
+            // set the owning side to null (unless already changed)
+            if ($trophy->getSutdent() === $this) {
+                $trophy->setSutdent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasTrophy($theme) {
+        /** @var Trophy $trophy */
+        foreach ($this->trophies as $trophy) {
+            if($trophy->getTheme() === $theme)
+            {
+                return true;
+            };
+        }
+    }
+
+    public function getTrophy($theme) {
+        /** @var Trophy $trophy */
+        foreach ($this->trophies as $trophy) {
+            if($trophy->getTheme() === $theme)
+            {
+                return $trophy;
+            };
+        }
     }
 }
