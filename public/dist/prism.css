@@ -6,7 +6,7 @@ https://prismjs.com/download.html#themes=prism-okaidia&languages=sql&plugins=lin
  * @author ocodia
  */
 body {
-	overflow: hidden;
+	overflow-x: hidden;
 }
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
 	background: #ffc107;
@@ -23,7 +23,7 @@ body {
 .tableFixHead    { overflow-y: auto; height:calc(50vh - 38px); width: calc(100% + 22px)}
 .tableFixHead th { position: sticky; top: 0; }
 .pane {
-	max-height:calc(100vh - 78px);
+	max-height:calc(100vh - 60px);
 	overflow-y: auto;
 }
 .pre{

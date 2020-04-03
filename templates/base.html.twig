@@ -35,7 +35,7 @@
         }
     </style>
 </head>
-<body style="background-image: url({{ asset('img/bg.svg') }});background-repeat:no-repeat;background-size: cover">
+<body style="background-image: url({{ asset('img/bg.svg') }});background-repeat:no-repeat;background-size: cover" class="overflow-hidden">
 <div class="container-fluid">
     <div class="row align-items-center h-100 bg-light" id="overlay-load">
         <div class="col-12 text-center">
@@ -62,7 +62,7 @@
 {% if app.user %}
     {% include 'nav/navbar.html.twig' %}
 {% endif %}
-<div class="container-fluid" style="height: calc(100vh - 78px)">
+<div class="container-fluid" style="height: calc(100vh - 60px)">
     {% block body %}{% endblock %}
 </div>
 <script

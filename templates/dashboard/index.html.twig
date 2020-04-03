@@ -3,10 +3,10 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
-    <div class="row p-5 h-100 bg-white">
-        <div class="col-2 shadow bg-light p-0">
+    <div class="row p-5 bg-white h-100">
+        <div class="col-2 p-0">
             <img src="https://via.placeholder.com/300x400" alt="" width="100%">
-            <div class="col-12 mt-3">
+            <div class="col-12 shadow bg-light p-3">
                 <h5>{{ app.user.firstname }}</h5>
                 <p class="text-black-50 small">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -40,6 +40,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
+            {% if app.user.trophies|length > 0 %}
             <div class="row mt-5">
                 <div class="col-12">
                     <h1><i class="fas fa-history text-warning"></i> Historique des cours terminés</h1>
@@ -58,6 +59,7 @@
                     {% endif %}
                 {% endfor %}
             </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
@@ -72,33 +74,10 @@
                         window.location.href = $(this).attr('data-theme');
                     }
                 });
+
             }
         }
         const dash = new Dashist();
-        /*
-    Carousel
-*/
-        $('#carousel-example').on('slide.bs.carousel', function (e) {
-            /*
-                CC 2.0 License Iatek LLC 2018 - Attribution required
-            */
-            var $e = $(e.relatedTarget);
-            var idx = $e.index();
-            var itemsPerSlide = 5;
-            var totalItems = $('.carousel-item').length;
-
-            if (idx >= totalItems-(itemsPerSlide-1)) {
-                var it = itemsPerSlide - (totalItems - idx);
-                for (var i=0; i<it; i++) {
-                    // append slides to end
-                    if (e.direction=="left") {
-                        $('.carousel-item').eq(i).appendTo('.carousel-inner');
-                    }
-                    else {
-                        $('.carousel-item').eq(0).appendTo('.carousel-inner');
-                    }
-                }
-            }
-        });
+        $('body').removeClass('overflow-hidden')
     </script>
 {% endblock %}

@@ -11,9 +11,6 @@ class Reqist {
         this.submitter.on('click',function () {
             bz.send(bz.submitter);
         });
-        this.deleter.on('click',function () {
-            bz.clean(bz.submitter);
-        });
         bz.init = function () {
             storage.clear();
             console.log(
@@ -42,6 +39,7 @@ class Reqist {
                 thead.html('');
                 tbody.html('');
                 if (data.response) {
+                    $('.loader-result').toggleClass('d-none d-block');
                     let cols = Object.keys(data.response[0]);
                     for (let i = 0; i < cols.length; i++) {
                         let colName = cols[i];
@@ -69,7 +67,7 @@ class Reqist {
                     savedRequest.find('.form-req').toggleClass('col-6 col-12');
                     savedRequest.find('button.req-submitter').attr('onclick','reqist.send($(this),true)').append(' de nouveau');
                     savedRequest.find('textarea').attr('readonly', 'true').html(container.find('[name="request"]').val());
-                    savedRequest.find('button.req-deleter').removeAttr('hidden').addClass('true');
+                    savedRequest.find('button.req-deleter').removeAttr('hidden').attr('onclick','reqist.clean($(this))');
                     $('#right-pane').append('<div class="rounded progress-bar-striped col-12 pt-3 pb-3 sql-form-ctn ' + bgResult + '">' + savedRequest.html() + '</div><hr>').find('textarea').click(function () {
                         bz.copy($(this))
                     });
