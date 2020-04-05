@@ -119,5 +119,6 @@
     <orderEntry type="library" name="jquery-3.3.1.slim" level="application" />
     <orderEntry type="library" name="bootstrap.dark" level="application" />
     <orderEntry type="library" name="all" level="application" />
+    <orderEntry type="library" name="pdf_viewer" level="application" />
   </component>
 </module>

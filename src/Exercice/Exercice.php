@@ -33,10 +33,6 @@ class Exercice
      */
     private $resultat;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $conseil;
 
     public function getId(): ?int
     {
@@ -79,15 +75,4 @@ class Exercice
         return $this;
     }
 
-    public function getConseil(): ?string
-    {
-        return $this->conseil;
-    }
-
-    public function setConseil(?string $conseil): self
-    {
-        $this->conseil = $conseil;
-
-        return $this;
-    }
 }

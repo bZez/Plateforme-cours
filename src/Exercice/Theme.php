@@ -2,6 +2,7 @@
 
 namespace App\Exercice;
 
+use App\Entity\Cours;
 use App\Entity\Trophy;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -39,10 +40,26 @@ class Theme
      */
     private $exercices;
 
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $rappel;
+
+    /**
+     * @ORM\Column(type="text",nullable=true)
+     */
+    private $intro;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Exercice\Cours", mappedBy="theme")
+     */
+    private $cours;
+
 
     public function __construct()
     {
         $this->exercices = new ArrayCollection();
+        $this->cours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,33 +134,68 @@ class Theme
     }
 
     /**
-     * @return Collection|Trophy[]
+     * @return mixed
      */
-    public function getTrophies(): Collection
+    public function getRappel()
     {
-        return $this->trophies;
+        return $this->rappel;
     }
 
-    public function addTrophy(Trophy $trophy): self
+    /**
+     * @param mixed $rappel
+     */
+    public function setRappel($rappel): void
     {
-        if (!$this->trophies->contains($trophy)) {
-            $this->trophies[] = $trophy;
-            $trophy->setTheme($this);
+        $this->rappel = $rappel;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIntro()
+    {
+        return $this->intro;
+    }
+
+    /**
+     * @param mixed $intro
+     */
+    public function setIntro($intro): void
+    {
+        $this->intro = $intro;
+    }
+
+    /**
+     * @return Collection|Cours[]
+     */
+    public function getCours(): Collection
+    {
+        return $this->cours;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->cours->contains($cour)) {
+            $this->cours[] = $cour;
+            $cour->setTheme($this);
         }
 
         return $this;
     }
 
-    public function removeTrophy(Trophy $trophy): self
+    public function removeCour(Cours $cour): self
     {
-        if ($this->trophies->contains($trophy)) {
-            $this->trophies->removeElement($trophy);
+        if ($this->cours->contains($cour)) {
+            $this->cours->removeElement($cour);
             // set the owning side to null (unless already changed)
-            if ($trophy->getTheme() === $this) {
-                $trophy->setTheme(null);
+            if ($cour->getTheme() === $this) {
+                $cour->setTheme(null);
             }
         }
 
         return $this;
     }
+
+
+
 }

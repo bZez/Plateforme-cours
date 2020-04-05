@@ -2,6 +2,8 @@
 
 namespace App\Controller\Student;
 
+use App\Exercice\Cours;
+use App\Repository\CoursRepository;
 use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -36,6 +38,17 @@ class DashboardController extends AbstractController
     {
         return $this->render('editor/editor.html.twig', [
             'theme' => $this->theme($code),
+        ]);
+    }
+
+    /**
+     * @Route("/cours/{x}", name="student_cours")
+     */
+    public function cours(CoursRepository $repository,$x)
+    {
+        $cours = $repository->findByTitre(str_replace('-',' ',$x));
+        return $this->render('cours/index.html.twig',[
+            'cours' => $cours
         ]);
     }
 }

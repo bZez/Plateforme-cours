@@ -9,7 +9,7 @@
                         <div class="col-12">
                             <h5><i class="fas fa-graduation-cap text-warning"></i> Exercice N°{{ loop.index }}</h5>
                             <hr>
-                            <p class="text-black-50">{% if loop.first %}Un cours sur le langage SQL n’est vraiment utile que si on essai de le mettre en pratique dans un contexte d’usage réel.{% else %}Bien joué ! #next {% endif %}</p>
+                            <p class="text-black-50">{% if loop.first %}{{ theme.intro ? theme.intro|raw : 'C\'est parti !' }}{% else %}Bien joué ! #next {% endif %}</p>
                             <h5><i class="fas fa-bullseye text-warning small"></i> Objectif:</h5>
                             <p class="text-black-50">{{ exo.objectif }}</p>
                         </div>
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-12">
                 <h5><i class="fas fa-lightbulb text-warning small"></i> Rappel:</h5>
-                <p class="text-black-50">La table est <b>villes_france_free</b></p>
+                <p class="text-black-50">{{ theme.rappel ? theme.rappel|raw : '' }}</p>
                 <span class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="right"
                       title="<img src='{{ asset('img/villedb.png') }}' width='98%'/>"><i class="fas fa-database"></i> Villes</span>&nbsp;
                 <span class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="right"
