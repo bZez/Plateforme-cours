@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Exercice;
+namespace App\Student;
 
-use App\Exercice\theme;
+use App\Student\theme;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +28,7 @@ class Cours
     private $pdf;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Exercice\Theme", inversedBy="cours")
+     * @ORM\ManyToOne(targetEntity="App\Student\Theme", inversedBy="cours")
      * @ORM\JoinColumn(nullable=false)
      */
     private $theme;

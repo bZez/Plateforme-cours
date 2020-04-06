@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row p-5 bg-white h-100">
-        <div class="col-2 p-0">
+        {#<div class="col-2 p-0">
             <img src="https://via.placeholder.com/300x400" alt="" width="100%">
             <div class="col-12 shadow bg-light p-3">
                 <h5>{{ app.user.firstname }}</h5>
@@ -19,28 +19,19 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-5 pl-5">
+        </div>#}
+        <div class="col-4">
             <div class="row">
                 <div class="col-12">
-                    <h1><i class="fas fa-hat-wizard text-warning"></i> Les cours</h1>
+                    <h1><i class="fas fa-graduation-cap text-warning"></i> Les cours</h1>
                     <hr>
                 </div>
                 {% for theme in themes %}
                     {% for cours in theme.cours %}
-                        <div class="col-12 bloc-cours rounded shadow p-3 bg-light mb-3"
-                             data-cours="{{ path('student_cours',{x:(cours.titre|lower)|replace({' ':'-'})}) }}">
-                            <div class="row align-items-center">
-                                <div class="col-1 text-center">
-                                    {{ (theme.icon|replace({'fa-4x':'fa-2x'}))|raw }}
-                                </div>
-                                <div class="col-10">
-                                    <h5>{{ cours.titre }}</h5>
-                                </div>
-                                <div class="col-1">
-                                    <button class="btn btn-sm btn-outline-warning"><i class="fas fa-arrow-right"></i>
-                                    </button>
-                                </div>
+                  <div class="col bloc-cours mb-3" data-cours="{{ path('student_cours',{x:(cours.titre|lower)|replace({' ':'-'})}) }}">
+                            <div class="col-12 rounded shadow p-3 bg-light text-center h-100">
+                                {{ theme.icon|raw }}
+                                <h6 class="mt-2 text-black-50" style="font-weight: 600">{{ cours.titre}}</h6>
                             </div>
                         </div>
                     {% else %}
@@ -48,10 +39,10 @@
                 {% endfor %}
             </div>
         </div>
-        <div class="col-5 pl-5">
+        <div class="col-4">
             <div class="row">
                 <div class="col-12">
-                    <h1><i class="fas fa-hat-wizard text-warning"></i> Les exercices</h1>
+                    <h1><i class="fas fa-tools text-warning"></i> Les exercices</h1>
                     <hr>
                 </div>
                 {% for theme in themes %}
@@ -67,6 +58,25 @@
             </div>
         </div>
 
+
+        <div class="col-4">
+            <div class="row">
+                <div class="col-12">
+                    <h1><i class="fas fa-question text-warning"></i> Les Quiz</h1>
+                    <hr>
+                </div>
+                {% for theme in themes %}
+                    {% for quiz in theme.quizzes %}
+                        <div class="col bloc-theme mb-3" data-theme="{{ path('student_quiz',{x:(quiz.title|lower)|replace({' ':'-'})}) }}">
+                            <div class="col-12 rounded shadow p-3 bg-light text-center">
+                                {{ theme.icon|raw }}
+                                <h6 class="mt-2 text-black-50" style="font-weight: 600">{{ quiz.title }}</h6>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block javascripts %}

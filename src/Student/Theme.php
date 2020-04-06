@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Exercice;
+namespace App\Student;
 
-use App\Entity\Cours;
-use App\Entity\Trophy;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -36,7 +34,7 @@ class Theme
     private $icon;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Exercice\Exercice", mappedBy="theme", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Student\Exercice", mappedBy="theme", orphanRemoval=true)
      */
     private $exercices;
 
@@ -51,15 +49,21 @@ class Theme
     private $intro;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Exercice\Cours", mappedBy="theme")
+     * @ORM\OneToMany(targetEntity="App\Student\Cours", mappedBy="theme")
      */
     private $cours;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Student\Quiz", mappedBy="theme")
+     */
+    private $quizzes;
 
 
     public function __construct()
     {
         $this->exercices = new ArrayCollection();
         $this->cours = new ArrayCollection();
+        $this->quizzes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,7 +199,34 @@ class Theme
 
         return $this;
     }
+    /**
+     * @return Collection|Quiz[]
+     */
+    public function getQuizzes(): Collection
+    {
+        return $this->quizzes;
+    }
 
+    public function addQuiz(Quiz $quiz): self
+    {
+        if (!$this->quizzes->contains($quiz)) {
+            $this->quizzes[] = $quiz;
+            $quiz->setTheme($this);
+        }
 
+        return $this;
+    }
 
+    public function removeQuiz(Quiz $quiz): self
+    {
+        if ($this->quizzes->contains($quiz)) {
+            $this->quizzes->removeElement($quiz);
+            // set the owning side to null (unless already changed)
+            if ($quiz->getTheme() === $this) {
+                $quiz->setTheme(null);
+            }
+        }
+
+        return $this;
+    }
 }

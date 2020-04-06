@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Student\Cours;
+use App\Student\Choice;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
 
 /**
- * @method Cours|null find($id, $lockMode = null, $lockVersion = null)
- * @method Cours|null findOneBy(array $criteria, array $orderBy = null)
- * @method Cours[]    findAll()
- * @method Cours[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Choice|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Choice|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Choice[]    findAll()
+ * @method Choice[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CoursRepository extends ServiceEntityRepository
+class ChoiceRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Cours::class);
+        parent::__construct($registry, Choice::class);
     }
 
     // /**
-    //  * @return Cours[] Returns an array of Cours objects
+    //  * @return Choice[] Returns an array of Choice objects
     //  */
     /*
     public function findByExampleField($value)
@@ -35,17 +35,9 @@ class CoursRepository extends ServiceEntityRepository
         ;
     }
     */
-    public function findByTitre($titre)
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('LOWER(c.titre) = :val')
-            ->setParameter('val', $titre)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
-    }
+
     /*
-    public function findOneBySomeField($value): ?Cours
+    public function findOneBySomeField($value): ?Choice
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')

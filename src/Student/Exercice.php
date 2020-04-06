@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exercice;
+namespace App\Student;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,7 +18,7 @@ class Exercice
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Exercice\Theme", inversedBy="exercices")
+     * @ORM\ManyToOne(targetEntity="App\Student\Theme", inversedBy="exercices")
      * @ORM\JoinColumn(nullable=false)
      */
     private $theme;

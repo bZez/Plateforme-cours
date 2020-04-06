@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use App\Exercice\Theme;
+use App\Student\Theme;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

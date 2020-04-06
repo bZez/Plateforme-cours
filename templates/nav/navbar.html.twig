@@ -23,11 +23,10 @@
                 {% for theme in lister.themes %}
                     {% if theme.cours|length > 0 %}
                             <li class="dropdown-submenu">
-                                <a class="dropdown-item" tabindex="-1" href="#"><span class="text-center text-black-50 mb-0">{{ (theme.icon|replace({'fa-4x':''}))|raw }} {{theme.code|capitalize}}</span></a>
+                                <a class="dropdown-item" tabindex="-1" href="#"><span class="text-center text-black-50 mb-0">{{ (theme.icon|replace({'fa-4x':''}))|raw }} {{ theme.label }}</span></a>
                                 <ul class="dropdown-menu">
                                     {% for cours in theme.cours %}
-                                        {% dump(cours) %}
-                                    <li class="dropdown-item {% if loop.first %}{% endif %}"><a class="dropdown-item small"
+                                    <li class="dropdown-item"><a class="dropdown-item small"
                                            href="{{ path('student_cours',{x:(cours.titre|lower)|replace({' ':'-'})}) }}">{{ cours.titre }}</a>
                                     </li>
                                     {% endfor %}
@@ -39,22 +38,6 @@
             </li>
 
             <li class="nav-item dropdown">
-                <div class="dropdown-menu multi-level" aria-labelledby="navbarDropdown">
-                    {% for theme in lister.themes %}
-                        {% if theme.cours|length > 0 %}
-                            <div class="dropdown-submenu">
-                                <a class="dropdown-item" tabindex="-1" href="#"><h6 class="text-center text-black-50 mb-0">{{ (theme.icon|replace({'fa-4x':''}))|raw }} {{theme.code|capitalize}}</h6></a>
-                                {% for cours in theme.cours %}
-                                    <a class="dropdown-item small"
-                                       href="{{ path('student_cours',{x:(cours.titre|lower)|replace({' ':'-'})}) }}">{{ cours.titre }}</a>
-                                {% endfor %}
-                            </div>
-
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </li>
-            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-tools text-warning"></i> Exercices
@@ -62,9 +45,33 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for theme in lister.themes %}
                         <a class="dropdown-item"
-                           href="{{ path('student_exos',{code:theme.code}) }}">{{ theme.label }}</a>
+                           href="{{ path('student_exos',{code:theme.code}) }}"><span class="text-center text-black-50 mb-0">{{ (theme.icon|replace({'fa-4x':''}))|raw }} {{ theme.label }}</span></a>
                     {% endfor %}
                 </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-question text-warning"></i> Les Quiz
+                </a>
+                <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                    {% for theme in lister.themes %}
+                        {% if theme.quizzes|length > 0 %}
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item" tabindex="-1" href="#"><span class="text-center text-black-50 mb-0">{{ (theme.icon|replace({'fa-4x':''}))|raw }} {{ theme.label }}</span></a>
+                                <ul class="dropdown-menu">
+                                    {% for quiz in theme.quizzes %}
+                                        <li class="dropdown-item ">
+                                            <a class="dropdown-item small"
+                                                                                                    href="{{ path('student_cours',{x:(quiz.title|lower)|replace({' ':'-'})}) }}">{{ quiz.title }}</a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">

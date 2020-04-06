@@ -2,7 +2,8 @@
 
 namespace App\Controller\Student;
 
-use App\Exercice\Cours;
+use App\Repository\QuizRepository;
+use App\Student\Cours;
 use App\Repository\CoursRepository;
 use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,6 +50,17 @@ class DashboardController extends AbstractController
         $cours = $repository->findByTitre(str_replace('-',' ',$x));
         return $this->render('cours/index.html.twig',[
             'cours' => $cours
+        ]);
+    }
+
+    /**
+     * @Route("/quiz/{x}", name="student_quiz")
+     */
+    public function quiz(QuizRepository $repository,$x)
+    {
+        $quiz = $repository->findByTitre(str_replace('-',' ',$x));
+        return $this->render('quiz/index.html.twig',[
+            'quiz' => $quiz
         ]);
     }
 }
